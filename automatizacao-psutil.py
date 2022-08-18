@@ -5,6 +5,9 @@ from psutil import virtual_memory
 import os
 from dashing import HSplit, VSplit, VGauge, HGauge, Text
 from time import sleep
+import pymysql
+
+# con = pymysql.connect(host='127.0.0.1',user='Leonardo Aguiar',database='db_MeusLivros',cursorclass=pymysql.cursors.DictCursor,password='123')
 
 os.system('cls')
 escolha = 0
@@ -38,8 +41,13 @@ while escolha != 5:
         print("Memória RAM sendo utilizada:")
         print('{:.2f}'.format(ramU),'GB') #usando no momento
         print("=-="*20)
+        conexao = pymysql.connect(db='dados', user='Leonardo Aguiar', passwd='P00senha')
+        cursor = conexao.cursor()
+        cursor.execute("INSERT INTO registro (ram, ramUtilizada) VALUES ('{:.2f}', '{:.2f}')".format(ram,ramU))
+        conexao.commit()
+        conexao.close()
 
-        sleep(12)
+        sleep(8)
         # memória virtual
         os.system('cls')
         print("Voltando ao menu...")
@@ -53,9 +61,10 @@ while escolha != 5:
         #velocidade cpu
         print("Velocidade da CPU: ")
         print('{:.2f}'.format(freq),"GHz")
+        
         #velocidade cpu
         print("=-="*20)
-        sleep(12)
+        sleep(8)
         os.system('cls')
         print("Voltando ao menu...")
         sleep(2)
@@ -74,7 +83,7 @@ while escolha != 5:
         print(cores_phy)
         #qtd cores
         print("=-="*20)
-        sleep(12)
+        sleep(8)
         os.system('cls')
         print("Voltando ao menu...")
         sleep(2)
@@ -90,7 +99,7 @@ while escolha != 5:
         print("Porcentagem de espaço sendo usado no disco: ")
         print('{:.2f}'.format(percentage_disk),"%")
         print("=-="*20)
-        sleep(12)
+        sleep(8)
         os.system('cls')
         print("Voltando ao menu...")
         sleep(2)
