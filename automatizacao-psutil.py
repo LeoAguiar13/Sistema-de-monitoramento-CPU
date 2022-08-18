@@ -42,8 +42,8 @@ print(cores_phy)
 #qtd cores
 
 
-free_disk=(psutil.disk_usage('D:\\').free)/1024/1024/1024
-percentage_disk=(psutil.disk_usage('D:\\').percent)
+free_disk=(psutil.disk_usage('C:\\').free)/1024/1024/1024
+percentage_disk=(psutil.disk_usage('C:\\').percent)
 print("=-"*20)
 print("Espaço livre no disco: ")
 print('{:.2f}'.format(free_disk),"GB")
