@@ -6,6 +6,8 @@ import os
 from dashing import HSplit, VSplit, VGauge, HGauge, Text
 from time import sleep
 import pymysql
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 
 # con = pymysql.connect(host='127.0.0.1',user='Leonardo Aguiar',database='db_MeusLivros',cursorclass=pymysql.cursors.DictCursor,password='123')
 
@@ -41,6 +43,30 @@ while escolha != 5:
         print("Memória RAM sendo utilizada:")
         print('{:.2f}'.format(ramU),'GB') #usando no momento
         print("=-="*20)
+
+        def definirGraficoRAM(frame):
+            valores.append(round(psutil.virtual_memory().used / psutil.virtual_memory().total *100, 2))
+            valores.remove(valores[0])
+
+            graficosRAM.cla()
+            graficosRAM.plot(valores)
+            graficosRAM.title.set_text(f'Memoria RAM - {valores[-1]}%')
+            graficosRAM.set_ylim(0, 100)
+
+        valores = [0]*50
+
+        janelaGeral = plt.figure(figsize=(3*3, 2*2), facecolor='#EEE')
+
+        graficosRAM = plt.subplot(311)
+
+        graficosRAM.axes.get_xaxis().set_visible(False)
+        graficosRAM.set_facecolor('#DDD')
+
+        animacaoGeral = FuncAnimation(janelaGeral, definirGraficoRAM, interval=500)
+
+        plt.show()
+
+
         conexao = pymysql.connect(db='dados', user='Leonardo Aguiar', passwd='P00senha')
         cursor = conexao.cursor()
         cursor.execute("INSERT INTO registro (ram, ramUtilizada) VALUES ('{:.2f}', '{:.2f}')".format(ram,ramU))
@@ -64,6 +90,28 @@ while escolha != 5:
         
         #velocidade cpu
         print("=-="*20)
+
+        def definirGraficoCPU(frame):
+            valores.append('{:.3f}'.format(freq))
+            valores.remove(valores[0])
+
+            graficosCPU.cla()
+            graficosCPU.plot(valores)
+            graficosCPU.title.set_text(f'Velocidade CPU - {valores[-1]}GHz')
+            graficosCPU.set_ylim(0, 10)
+
+        valores = [0]*50
+
+        janelaGeral = plt.figure(figsize=(3*3, 2*2), facecolor='#EEE')
+
+        graficosCPU = plt.subplot(311)
+
+        graficosCPU.axes.get_xaxis().set_visible(False)
+        graficosCPU.set_facecolor('#DDD')
+
+        animacaoGeral = FuncAnimation(janelaGeral, definirGraficoCPU, interval=500)
+
+        plt.show()
 
         conexao = pymysql.connect(db='dados', user='Leonardo Aguiar', passwd='P00senha')
         cursor = conexao.cursor()
@@ -113,6 +161,29 @@ while escolha != 5:
         print("Porcentagem de espaço sendo usado no disco: ")
         print('{:.2f}'.format(percentage_disk),"%")
         print("=-="*20)
+
+        def definirGraficoDisco(frame):
+            valores.append('{:.2f}'.format(percentage_disk))
+            valores.remove(valores[0])
+
+            graficosDisco.cla()
+            graficosDisco.plot(valores)
+            graficosDisco.scatter(len(valores) - 1, valores[-1])
+            graficosDisco.title.set_text(f'Quantidade ocupada no disco - {valores[-1]}%')
+            graficosDisco.set_ylim(0, 100)
+
+        valores = [0]*50
+
+        janelaGeral = plt.figure(figsize=(3*3, 2*2), facecolor='#EEE')
+
+        graficosDisco = plt.subplot(311)
+
+        graficosDisco.axes.get_xaxis().set_visible(False)
+        graficosDisco.set_facecolor('#DDD')
+
+        animacaoGeral = FuncAnimation(janelaGeral, definirGraficoDisco, interval=500)
+
+        plt.show()
 
         conexao = pymysql.connect(db='dados', user='Leonardo Aguiar', passwd='P00senha')
         cursor = conexao.cursor()
