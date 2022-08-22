@@ -64,6 +64,13 @@ while escolha != 5:
         
         #velocidade cpu
         print("=-="*20)
+
+        conexao = pymysql.connect(db='dados', user='Leonardo Aguiar', passwd='P00senha')
+        cursor = conexao.cursor()
+        cursor.execute("INSERT INTO registro (velocidadeCPU) VALUES ('{:.2f}')".format(freq))
+        conexao.commit()
+        conexao.close()
+
         sleep(8)
         os.system('cls')
         print("Voltando ao menu...")
@@ -83,6 +90,13 @@ while escolha != 5:
         print(cores_phy)
         #qtd cores
         print("=-="*20)
+
+        conexao = pymysql.connect(db='dados', user='Leonardo Aguiar', passwd='P00senha')
+        cursor = conexao.cursor()
+        cursor.execute("INSERT INTO registro (qtdCoreLgc, qtdCorePhy) VALUES ('{:.2f}', '{:.2f}')".format(cores, cores_phy))
+        conexao.commit()
+        conexao.close()
+
         sleep(8)
         os.system('cls')
         print("Voltando ao menu...")
@@ -99,6 +113,13 @@ while escolha != 5:
         print("Porcentagem de espaço sendo usado no disco: ")
         print('{:.2f}'.format(percentage_disk),"%")
         print("=-="*20)
+
+        conexao = pymysql.connect(db='dados', user='Leonardo Aguiar', passwd='P00senha')
+        cursor = conexao.cursor()
+        cursor.execute("INSERT INTO registro (discoLivre, discoOcp_pct) VALUES ('{:.2f}', '{:.2f}')".format(free_disk, percentage_disk))
+        conexao.commit()
+        conexao.close()
+
         sleep(8)
         os.system('cls')
         print("Voltando ao menu...")
